@@ -29,7 +29,12 @@ h1 {
     color: red;
     margin-bottom: 10px;
 }
-.cliente-item p{
+
+.resultadoDaBusca p {
+    color: red;
+}
+
+.cliente-item {
     color:black;
 }
 

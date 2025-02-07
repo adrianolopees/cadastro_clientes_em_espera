@@ -43,12 +43,12 @@ class BuscarClientes {
       const div = document.createElement('div')
       div.classList.add('cliente-item')
       div.innerHTML = `
-      <p><strong>Cliente:</strong> ${cliente.cliente}</p>
-      <p><strong>Celular:</strong> ${cliente.celular}</p>
-      <p><strong>Modelo:</strong> ${cliente.modelo}</p>
-      <p><strong>Referência:</strong> ${cliente.referencia}</p>
-      <p><strong>Numeração:</strong> ${cliente.numeracao}</p>
-      <p><strong>Cor:</strong> ${cliente.cor}</p>
+      <strong>Cliente:</strong> ${cliente.cliente} <br>
+      <strong>Celular:</strong> ${cliente.celular}<br>
+      <strong>Modelo:</strong> ${cliente.modelo}<br>
+      <strong>Referência:</strong> ${cliente.referencia}<br>
+      <strong>Numeração:</strong> ${cliente.numeracao}<br>
+      <strong>Cor:</strong> ${cliente.cor}
       `
       this.resultados.appendChild(div)
     });
