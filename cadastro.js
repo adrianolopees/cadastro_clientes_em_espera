@@ -2,6 +2,9 @@ class EsperandoProduto {
   constructor() {
     this.form = document.querySelector(".form");
     this.clientes = this.carregarClientes();
+    this.inputCelular = this.form.querySelector(".celular");
+
+    this.aplicarMascaraCelular();
     this.eventos();
   }
 
@@ -20,25 +23,31 @@ class EsperandoProduto {
       this.clientes.push(dadosDoClientes);
       console.log(this.clientes);
 
-      this.limparFormulario()
+      this.limparFormulario();
       this.salvarCliente(this.clientes);
     }
   }
 
-  limparFormulario(){
-    this.form.reset()
+  limparFormulario() {
+    this.form.reset();
   }
-  
+
   carregarClientes() {
-    const clientesArmazenados = JSON.parse(localStorage.getItem("clientes")) || [];
+    const clientesArmazenados =
+      JSON.parse(localStorage.getItem("clientes")) || [];
     return clientesArmazenados;
   }
 
   salvarCliente(clientes) {
     localStorage.setItem("clientes", JSON.stringify(clientes));
-    alert('Cliente Salvo com sucesso!')
+    alert("Cliente Salvo com sucesso!");
   }
 
+  aplicarMascaraCelular() {
+    IMask(this.inputCelular, {
+      mask: " (00) 00000-0000",
+    });
+  }
 
   camposValidos() {
     let valido = true;
@@ -46,21 +55,27 @@ class EsperandoProduto {
     for (let msgErro of this.form.querySelectorAll(".msg-erro")) {
       msgErro.remove();
     }
+    for (let input of this.form.querySelectorAll(".valido")) {
+      input.classList.remove("input-erro");
+    }
 
-    const celularRegex = /^\(\d{2}\)\s?9\d{4}-\d{4}$/;
-    const celular = this.form.querySelector(".celular");
     const campos = this.form.querySelectorAll(".valido");
 
     campos.forEach((campo) => {
       const label = campo.previousElementSibling.innerText;
 
       if (!campo.value.trim()) {
-        this.criaErro(campo, `${label} não pode estar em branco.`);
+        this.criaErro(campo, `${label} não pode estar em branco!`);
         valido = false;
       }
 
-      if (campo === celular && !celularRegex.test(celular.value)) {
-        this.criaErro(campo, `${label} formato inválido (DD) 00000-0000`);
+      if (campo.classList.contains("celular") && campo.value.length < 16) {
+        this.criaErro(campo, `Celular incompleto!`);
+        valido = false;
+      }
+
+      if (campo.classList.contains("cor") && !isNaN(campo.value)) {
+        this.criaErro(campo, `Somente letras!`);
         valido = false;
       }
     });
@@ -82,6 +97,12 @@ class EsperandoProduto {
     const div = document.createElement("div");
     div.innerText = msg;
     div.classList.add("msg-erro");
+
+    const icon = document.createElement("span");
+    icon.classList.add("bi", "bi-exclamation-triangle-fill");
+    campo.classList.add("input-erro");
+
+    div.insertAdjacentElement("afterbegin", icon);
     campo.insertAdjacentElement("afterend", div);
   }
 }

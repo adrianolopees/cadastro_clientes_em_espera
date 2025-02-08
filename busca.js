@@ -14,10 +14,14 @@ class BuscarClientes {
   filtrarClientes() {
     const valorBuscado = this.campoBuscar.value.toLowerCase();
     const clientes = this.carregarClientes();
+    if(valorBuscado === '') {
+      this.resultados.innerHTML = ''
+      return
+    }
 
     const clientesFiltrados = clientes.filter(cliente => { 
       return (
-        cliente.cliente.toLowerCase().includes(valorBuscado) || 
+        cliente.referencia.toLowerCase().includes(valorBuscado) || 
         cliente.modelo.toLowerCase().includes(valorBuscado)
     )
       
