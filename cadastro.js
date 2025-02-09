@@ -45,7 +45,7 @@ class EsperandoProduto {
 
   aplicarMascaraCelular() {
     IMask(this.inputCelular, {
-      mask: " (00) 00000-0000",
+      mask: "(00) 00000-0000",
     });
   }
 
@@ -60,7 +60,6 @@ class EsperandoProduto {
     }
 
     const campos = this.form.querySelectorAll(".valido");
-
     campos.forEach((campo) => {
       const label = campo.previousElementSibling.innerText;
 
@@ -69,15 +68,17 @@ class EsperandoProduto {
         valido = false;
       }
 
-      if (campo.classList.contains("celular") && campo.value.length < 16) {
-        this.criaErro(campo, `Celular incompleto!`);
+      if ((campo.classList.contains("celular") && campo.value.length < 16) && campo.value.trim() !== '') {
+        this.criaErro(campo, "Número incompleto!");
         valido = false;
       }
 
-      if (campo.classList.contains("cor") && !isNaN(campo.value)) {
+      if ((campo.classList.contains("cor") || campo.classList.contains('modelo')) && campo.value.trim() !== '' && !isNaN(campo.value)) {
         this.criaErro(campo, `Somente letras!`);
         valido = false;
       }
+
+    
     });
 
     if (valido) {
@@ -105,6 +106,7 @@ class EsperandoProduto {
     div.insertAdjacentElement("afterbegin", icon);
     campo.insertAdjacentElement("afterend", div);
   }
+
 }
 
 const cliente1 = new EsperandoProduto();
