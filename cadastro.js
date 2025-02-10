@@ -68,7 +68,7 @@ class EsperandoProduto {
         valido = false;
       }
 
-      if ((campo.classList.contains("celular") && campo.value.length < 16) && campo.value.trim() !== '') {
+      if ((campo.classList.contains("celular") && campo.value.length < 15) ) {
         this.criaErro(campo, "Número incompleto!");
         valido = false;
       }
