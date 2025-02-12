@@ -48,38 +48,61 @@ class BuscarClientes {
     clientes.forEach((cliente) => {
       const div = document.createElement("div");
       div.classList.add("cliente-item");
+
       div.innerHTML = `
       <strong>Cliente:</strong> ${cliente.cliente} <br>
-      <strong>Celular:</strong> ${cliente.celular}<br>
+      <strong>Celular:</strong> <span class="celular">${cliente.celular}</span><br>
       <strong>Modelo:</strong> ${cliente.modelo}<br>
       <strong>Referência:</strong> ${cliente.referencia}<br>
       <strong>Numeração:</strong> ${cliente.numeracao}<br>
       <strong>Cor:</strong> ${cliente.cor}
-      `;
+    `;
 
-      this.criaBtnZap(cliente, div);
+      this.criaIconZap(cliente, div);
+      this.criaIconLixo(cliente, div)
       this.resultados.appendChild(div);
     });
   }
 
-  criaBtnZap (cliente, div) {
-    const btnZap = document.createElement("button");
-    btnZap.textContent = "Enviar WhatsApp";
-    btnZap.classList.add("btn", "btn-success", "mt-2");
+  criaIconZap(cliente, div) {
+    const iconZap = document.createElement("i");
+    iconZap.classList.add("fa-brands", "fa-whatsapp");
 
-    btnZap.addEventListener("click", (e) => {
-      e.preventDefault()
-     this.criaMsgZap(cliente)
+    iconZap.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.criaMsgZap(cliente);
     });
-
-    div.appendChild(btnZap)
+    const campoCelular = div.querySelector(".celular");
+    campoCelular.insertAdjacentElement("afterend", iconZap); 
   }
 
-  criaMsgZap(cliente){
+  criaMsgZap(cliente) {
     const mensagem = `Olá, ${cliente.cliente}! Aqui é da Ferracini maxi shopping, estou entrando em contato sobre o modelo ${cliente.modelo}, que não tinha no número ${cliente.numeracao} na cor ${cliente.cor}. Acabou de chegar, quer que separe pra você ?`;
     const celularSomenteNumeros = cliente.celular.replace(/\D/g, ""); // Remove tudo que não é número
-    const urlWhatsApp = `https://wa.me/55${celularSomenteNumeros}?text=${encodeURIComponent(mensagem)}`;
+    const urlWhatsApp = `https://wa.me/55${celularSomenteNumeros}?text=${encodeURIComponent(
+      mensagem
+    )}`;
     window.open(urlWhatsApp, "_blank");
+  }
+
+  criaIconLixo(cliente, div){
+    const iconLixo = document.createElement('i')
+      iconLixo.classList.add("fa-regular", "fa-trash-can");
+
+      iconLixo.addEventListener('click', (e) => {
+        e.preventDefault()
+        this.excluiCliente(cliente)
+      })
+   div.appendChild(iconLixo)
+  }
+
+  excluiCliente(cliente){
+    const clientes = this.carregarClientes()
+    const clientesAtualizados = clientes.filter(c => JSON.stringify(c) !== JSON.stringify(cliente))
+
+    localStorage.setItem('clientes', JSON.stringify(clientesAtualizados))
+
+    this.exibirResultados(clientesAtualizados)
   }
 }
 
