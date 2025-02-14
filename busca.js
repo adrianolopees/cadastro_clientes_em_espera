@@ -91,7 +91,25 @@ class BuscarClientes {
 
       iconLixo.addEventListener('click', (e) => {
         e.preventDefault()
-        this.excluiCliente(cliente)
+        const modal = document.querySelector('.modal')
+        const btnSIM = document.querySelector('.sim')
+        const btnNAO= document.querySelector('.nao')
+
+        modal.style.display = 'block'
+
+        btnSIM.addEventListener('click', ()=> {
+          alert(`cliente ${cliente.cliente} excluido porra`)
+          this.excluiCliente(cliente)
+          modal.style.display = 'none'
+          return
+        })
+
+        btnNAO.addEventListener('click', () => {
+          alert('mande msg entao porra')
+          modal.style.display = 'none'
+          return
+        })
+        
       })
    div.appendChild(iconLixo)
   }
