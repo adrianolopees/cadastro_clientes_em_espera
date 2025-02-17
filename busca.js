@@ -66,10 +66,9 @@ class BuscarClientes {
 
   criaIconZap(cliente, div) {
     const iconZap = document.createElement("i");
-    iconZap.classList.add("fa-brands", "fa-whatsapp");
+    iconZap.classList.add("fa-brands", "fa-whatsapp" ,'icon-zap');
 
-    iconZap.addEventListener("click", (e) => {
-      e.preventDefault();
+    iconZap.addEventListener("click", () => {
       this.criaMsgZap(cliente);
     });
     const campoCelular = div.querySelector(".celular");
@@ -77,7 +76,7 @@ class BuscarClientes {
   }
 
   criaMsgZap(cliente) {
-    const mensagem = `Olá, ${cliente.cliente}! Aqui é da Ferracini maxi shopping, estou entrando em contato sobre o modelo ${cliente.modelo}, que não tinha no número ${cliente.numeracao} na cor ${cliente.cor}. Acabou de chegar, quer que separe pra você ?`;
+    const mensagem = `Olá, ${cliente.cliente}! Aqui é da Ferracini maxi shopping, estou entrando em contato sobre o modelo ${cliente.modelo}, que não tinha no número ${cliente.numeracao} na cor ${cliente.cor} . Acabou de chegar, quer que separe pra você ?`;
     const celularSomenteNumeros = cliente.celular.replace(/\D/g, ""); // Remove tudo que não é número
     const urlWhatsApp = `https://wa.me/55${celularSomenteNumeros}?text=${encodeURIComponent(
       mensagem
@@ -87,10 +86,9 @@ class BuscarClientes {
 
   criaIconLixo(cliente, div){
     const iconLixo = document.createElement('i')
-      iconLixo.classList.add("fa-regular", "fa-trash-can");
+      iconLixo.classList.add("fa-regular", "fa-trash-can" ,'icon-lixo');
 
-      iconLixo.addEventListener('click', (e) => {
-        e.preventDefault()
+      iconLixo.addEventListener('click', () => {
         const modal = document.querySelector('.modal')
         const btnSIM = document.querySelector('.sim')
         const btnNAO= document.querySelector('.nao')
