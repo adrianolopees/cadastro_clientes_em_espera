@@ -12,6 +12,20 @@ class EsperandoProduto {
     this.form.addEventListener("submit", (e) => {
       this.tratandoEnvio(e);
     });
+
+    const campos = document.querySelectorAll('input')
+
+    campos.forEach((campo, index) => {
+      campo.addEventListener('keydown', (event) => {
+        if(event.key === 'Enter'){
+          event.preventDefault()
+          const proximoCampo = campos[index + 1]
+          if(proximoCampo){
+            proximoCampo.focus()
+          }
+        }
+      })
+    })
   }
 
   tratandoEnvio(e) {
@@ -68,7 +82,7 @@ class EsperandoProduto {
         valido = false;
       }
 
-      if ((campo.classList.contains("celular") && campo.value.length < 15) ) {
+      if ((campo.classList.contains("celular") && campo.value.length < 15 && campo.value.length > 0) ) {
         this.criaErro(campo, "Número incompleto!");
         valido = false;
       }

@@ -15,6 +15,7 @@ class BuscarClientes {
   filtrarClientes() {
     const valorBuscado = this.campoBuscar.value.toLowerCase();
     const clientes = this.carregarClientes();
+
     if (valorBuscado === "") {
       this.resultados.innerHTML = "";
       return;
@@ -59,20 +60,20 @@ class BuscarClientes {
     `;
 
       this.criaIconZap(cliente, div);
-      this.criaIconLixo(cliente, div)
+      this.criaIconLixo(cliente, div);
       this.resultados.appendChild(div);
     });
   }
 
   criaIconZap(cliente, div) {
     const iconZap = document.createElement("i");
-    iconZap.classList.add("fa-brands", "fa-whatsapp" ,'icon-zap');
+    iconZap.classList.add("fa-brands", "fa-whatsapp", "icon-zap");
 
     iconZap.addEventListener("click", () => {
       this.criaMsgZap(cliente);
     });
     const campoCelular = div.querySelector(".celular");
-    campoCelular.insertAdjacentElement("afterend", iconZap); 
+    campoCelular.insertAdjacentElement("afterend", iconZap);
   }
 
   criaMsgZap(cliente) {
@@ -84,41 +85,46 @@ class BuscarClientes {
     window.open(urlWhatsApp, "_blank");
   }
 
-  criaIconLixo(cliente, div){
-    const iconLixo = document.createElement('i')
-      iconLixo.classList.add("fa-regular", "fa-trash-can" ,'icon-lixo');
+  criaIconLixo(cliente, div) {
+    const iconLixo = document.createElement("i");
+    iconLixo.classList.add("fa-regular", "fa-trash-can", "icon-lixo");
 
-      iconLixo.addEventListener('click', () => {
-        const modal = document.querySelector('.modal')
-        const btnSIM = document.querySelector('.sim')
-        const btnNAO= document.querySelector('.nao')
+    iconLixo.addEventListener("click", () => {
+      const modal = document.querySelector(".modal");
+      const btnSIM = document.querySelector(".sim");
+      const btnNAO = document.querySelector(".nao");
 
-        modal.style.display = 'block'
+      modal.classList.add("ativo");
 
-        btnSIM.addEventListener('click', ()=> {
-          alert(`cliente ${cliente.cliente} excluido porra`)
-          this.excluiCliente(cliente)
-          modal.style.display = 'none'
-          return
-        })
+      btnSIM.replaceWith(btnSIM.cloneNode(true));
+      btnNAO.replaceWith(btnNAO.cloneNode(true));
 
-        btnNAO.addEventListener('click', () => {
-          alert('mande msg entao porra')
-          modal.style.display = 'none'
-          return
-        })
-        
-      })
-   div.appendChild(iconLixo)
+      const novoBtnSIM = document.querySelector(".sim");
+      const novoBtnNAO = document.querySelector(".nao");
+
+      novoBtnSIM.addEventListener("click", () => {
+        alert(`cliente ${cliente.cliente} excluido!`);
+        this.excluiCliente(cliente);
+        modal.classList.remove("ativo");
+      });
+
+      novoBtnNAO.addEventListener("click", () => {
+        modal.classList.remove("ativo");
+      });
+    });
+
+    div.appendChild(iconLixo);
   }
 
-  excluiCliente(cliente){
-    const clientes = this.carregarClientes()
-    const clientesAtualizados = clientes.filter(c => JSON.stringify(c) !== JSON.stringify(cliente))
+  excluiCliente(cliente) {
+    const clientes = this.carregarClientes();
+    const clientesAtualizados = clientes.filter(
+      (c) => JSON.stringify(c) !== JSON.stringify(cliente)
+    );
 
-    localStorage.setItem('clientes', JSON.stringify(clientesAtualizados))
+    localStorage.setItem("clientes", JSON.stringify(clientesAtualizados));
 
-    this.exibirResultados(clientesAtualizados)
+    this.exibirResultados(clientesAtualizados);
   }
 }
 

@@ -7,6 +7,7 @@
   --btn: #007bff;
   --btn-hover: #007bffc9;
   --zap-icon: #25d366;
+  --btn-text:#ffff;
   --error-color: #dc3545;
   --text-color: #1a1a1a;
   --bg-light: #ffffff;
@@ -23,10 +24,7 @@
 }
 
 body {
-  background-image: url(img/bg1.avif);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-color: #3333333b;
   font-family: var(--font-primary);
   width: 100%;
   min-height: 100vh;
@@ -37,6 +35,10 @@ h1 {
   font-size: 50px;
   text-align: center;
   margin-top: 3rem;
+}
+
+.destaque {
+  color: #ff0000;
 }
 
 input {
@@ -50,7 +52,7 @@ input {
   font-size: 16px;
 }
 
-p {
+.subtitle {
   text-align: center;
   margin-bottom: 50px;
   font-style: italic;
@@ -59,11 +61,8 @@ p {
   font-weight: bolder;
   text-shadow: 1px 1px var(--shadow-color);
 }
-/* CAMPO ERROR*/
-.destaque {
-  color: #ff0000;
-}
 
+/* CAMPO ERROR*/
 .msg-erro {
   font-size: 13px;
   color: var(--error-color);
@@ -93,14 +92,14 @@ p {
   padding: 0 5px 0 2px;
 }
 
-/* BTNS */
+/* BTN FLUTUANTE */
 button.btn {
   padding: 10px;
   border: none;
   border-radius: 3px;
   width: 100%;
   margin-top: 20px;
-  color: #ffff;
+  color: var(--btn-text);
   background-color: var(--btn);
   font-size: 20px;
   letter-spacing: 4px;
@@ -131,6 +130,7 @@ button.botao-flutuante:hover {
   font-size: 22px;
 }
 
+/* CONTAINER BUSCAR */
 .container {
   position: relative;
   background-color: var(--bg-light);
@@ -156,40 +156,19 @@ button.botao-flutuante:hover {
   text-align: center;
 }
 
-.modal {
-  display: none;
-  position: absolute;
-  padding: 20px;
-  top: -150px;
-  box-shadow: 2px 2px 10px var(--modal-shadow);
-  background-color: var(--bg-light);
-  max-width: 450px;
-  height: 160px;
-  border-radius: 5px;
-  animation: mostrar-Modal 0.4s ease-in-out both;
-  transition: all 0.6s ease-in-out;
-}
-
-@keyframes mostrar-Modal {
-  0% {
-    transform: translateY(-150px);
-  }
-  100% {
-    transform: translateY(150px);
-  }
-}
 
 .btn-container-modal {
   display: flex;
   justify-content: center;
   gap: 60px;
 }
+
 .modal button {
   padding: 6px 35px;
   margin-top: 60px;
   border: none;
   border-radius: 3px;
-  color: #ffff;
+  color: var(--btn-text);
   background-color: var(--btn);
   font-size: 20px;
 }
@@ -198,6 +177,52 @@ button.botao-flutuante:hover {
   background-color: var(--btn-hover);
 }
 
+.modal {
+  position: fixed; /* Fixa o modal na tela */
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9); /* Centraliza corretamente */
+  visibility: hidden;
+  opacity: 0;
+  background-color: var(--bg-light);
+  padding: 20px;
+  max-width: 450px;
+  height: 160px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px var(--modal-shadow);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+  z-index: 9999;
+}
+
+.modal.ativo {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+@keyframes mostrarModal {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes esconderModal {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+}
 /* ICONES PG BUSCAR */
 .icon-zap {
   margin-left: 10px;
